@@ -23,13 +23,25 @@ sudo groupadd docker
 sudo usermod -aG docker ${USER}
 # 重启 docker 服务
 sudo systemctl restart docker
-# 切换或者退出当前账户再从新登入
+# 切换或者退出当前账户再从新登入，测试
 docker ps
 ```
-考虑到网络环境，建议将依赖库先下载，修改 **Copy.Dockerfile** 里的路径，然后进行安装
+### Options
+方法一: 考虑到网络环境，建议将依赖库先下载，修改 **Copy.Dockerfile** 里的路径，然后进行安装
 ```bash
 # docker build -t xhglz/cvlife:orbslam3 -f Docker/Dockerfile .
 docker build -t xhglz/cvlife:orbslam3 -f Docker/Copy.Dockerfile .
+```
+方法二:利用 docker 镜像导出与加载
+通过[百度网盘]下载镜像包：
+- 链接: https://pan.baidu.com/s/16fqXULOBT7wYUcQakTAxYw?pwd=719u 
+- 提取码: 719u
+```bash
+# 导出
+# docker save -o cvlife_orbslam3.tar xhglz/cvlife:orbslam3
+# docker save xhglz/cvlife:orbslam3 | gzip > cvlife_orbslam3.tar.gz
+# 加载
+gunzip -c cvlife_orbslam3.tar.gz | docker load
 ```
 ## Compile
 下载课程注释的代码
